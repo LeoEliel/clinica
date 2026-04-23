@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Atendimentos</title>
+    <link rel="stylesheet" href="{% static 'clinica/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Relacionamentos Médico-Convênio</h1>
+            <a href="{% url 'atende_create' %}" class="btn btn-primary">+ Adicionar Novo Relacionamento</a>
+        </div>
+
+        <div class="list-container">
+            {% if atende %}
+                <ul class="ambulatorio-list">
+                {% for item in atende %}
+                    <li class="ambulatorio-item">
+                        <div class="ambulatorio-info">
+                            <span class="ambulatorio-id">ID: {{ item.id }}</span>
+                            <span class="ambulatorio-nome">Médico: {{ item.medico }}</span>
+                            <span class="ambulatorio-andar">Convênio: {{ item.convenio }}</span>
+                        </div>
+                        <div class="ambulatorio-actions">
+                            <a href="{% url 'atende_update' item.id %}" class="btn btn-edit">Editar</a>
+                            <a href="{% url 'atende_delete' item.id %}" class="btn btn-delete">Deletar</a>
+                        </div>
+                    </li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <div class="empty-message">
+                    <p>Nenhum relacionamento cadastrado no momento.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

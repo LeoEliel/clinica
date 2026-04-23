@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Médicos</title>
+    <link rel="stylesheet" href="{% static 'clinica/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Médicos Cadastrados</h1>
+            <a href="{% url 'medico_create' %}" class="btn btn-primary">+ Adicionar Novo Médico</a>
+        </div>
+
+        <div class="list-container">
+            {% if medicos %}
+                <ul class="ambulatorio-list">
+                {% for medico in medicos %}
+                    <li class="ambulatorio-item">
+                        <div class="ambulatorio-info">
+                            <span class="ambulatorio-id">CRM: {{ medico.crm }}</span>
+                            <span class="ambulatorio-nome">{{ medico.nome }}</span>
+                            <span class="ambulatorio-andar">{{ medico.especialidade }}</span>
+                        </div>
+                        <div class="ambulatorio-actions">
+                            <a href="{% url 'medico_update' medico.crm %}" class="btn btn-edit">Editar</a>
+                            <a href="{% url 'medico_delete' medico.crm %}" class="btn btn-delete">Deletar</a>
+                        </div>
+                    </li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <div class="empty-message">
+                    <p>Nenhum médico cadastrado no momento.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

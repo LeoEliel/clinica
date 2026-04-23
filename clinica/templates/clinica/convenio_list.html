@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Convênios</title>
+    <link rel="stylesheet" href="{% static 'clinica/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Convênios Cadastrados</h1>
+            <a href="{% url 'convenio_create' %}" class="btn btn-primary">+ Adicionar Novo Convênio</a>
+        </div>
+
+        <div class="list-container">
+            {% if convenios %}
+                <ul class="ambulatorio-list">
+                {% for convenio in convenios %}
+                    <li class="ambulatorio-item">
+                        <div class="ambulatorio-info">
+                            <span class="ambulatorio-id">Código: {{ convenio.codconv }}</span>
+                            <span class="ambulatorio-nome">{{ convenio.nome }}</span>
+                        </div>
+                        <div class="ambulatorio-actions">
+                            <a href="{% url 'convenio_update' convenio.codconv %}" class="btn btn-edit">Editar</a>
+                            <a href="{% url 'convenio_delete' convenio.codconv %}" class="btn btn-delete">Deletar</a>
+                        </div>
+                    </li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <div class="empty-message">
+                    <p>Nenhum convênio cadastrado no momento.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

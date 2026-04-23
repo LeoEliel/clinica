@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Pacientes</title>
+    <link rel="stylesheet" href="{% static 'clinica/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Pacientes Cadastrados</h1>
+            <a href="{% url 'paciente_create' %}" class="btn btn-primary">+ Adicionar Novo Paciente</a>
+        </div>
+
+        <div class="list-container">
+            {% if pacientes %}
+                <ul class="ambulatorio-list">
+                {% for paciente in pacientes %}
+                    <li class="ambulatorio-item">
+                        <div class="ambulatorio-info">
+                            <span class="ambulatorio-id">ID: {{ paciente.id }}</span>
+                            <span class="ambulatorio-nome">{{ paciente.nome }}</span>
+                            <span class="ambulatorio-andar">{{ paciente.cidade }}</span>
+                        </div>
+                        <div class="ambulatorio-actions">
+                            <a href="{% url 'paciente_update' paciente.id %}" class="btn btn-edit">Editar</a>
+                            <a href="{% url 'paciente_delete' paciente.id %}" class="btn btn-delete">Deletar</a>
+                        </div>
+                    </li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <div class="empty-message">
+                    <p>Nenhum paciente cadastrado no momento.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deletar Paciente</title>
+    <link rel="stylesheet" href="{% static 'clinica/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="delete-confirmation">
+            <h1>Confirmar Exclusão</h1>
+            
+            <div class="confirmation-message">
+                <p class="warning-text">Você tem certeza que deseja apagar permanentemente o paciente?</p>
+                <p class="ambulatorio-name">"{{ paciente }}"</p>
+            </div>
+            
+            <form method="POST" class="delete-form">
+                {% csrf_token %}
+                <div class="form-actions delete-actions">
+                    <button type="submit" class="btn btn-danger">Sim, quero deletar</button>
+                    <a href="{% url 'paciente_list' %}" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

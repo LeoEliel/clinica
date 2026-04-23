@@ -1,0 +1,468 @@
+/* style.css - Clínica Ambulatório */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilos gerais do corpo da página */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+    color: #2c3e50;
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* Container principal */
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px 20px;
+}
+
+/* Títulos principais */
+h1 {
+    color: #2c3e50;
+    font-size: 2.2em;
+    margin-bottom: 25px;
+    border-bottom: 3px solid #3498db;
+    padding-bottom: 15px;
+    font-weight: 600;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+}
+
+/* Links e estilizações gerais */
+a {
+    color: #3498db;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+a:hover {
+    color: #2980b9;
+    text-decoration: underline;
+}
+
+/* ==================== PÁGINA DE LISTA ==================== */
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.list-container {
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    padding: 20px;
+    overflow: hidden;
+}
+
+/* Lista de ambulatórios */
+.ambulatorio-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.ambulatorio-item {
+    background: #ffffff;
+    border: 1px solid #ecf0f1;
+    border-left: 5px solid #3498db;
+    margin: 15px 0;
+    padding: 20px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    transition: all 0.3s ease;
+    flex-wrap: wrap;
+}
+
+.ambulatorio-item:hover {
+    box-shadow: 0 6px 20px rgba(52, 152, 219, 0.15);
+    transform: translateY(-2px);
+    border-left-color: #2980b9;
+}
+
+.ambulatorio-info {
+    flex: 1;
+    display: flex;
+    gap: 25px;
+    min-width: 300px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.ambulatorio-id, .ambulatorio-nome, .ambulatorio-andar {
+    font-weight: 500;
+    color: #2c3e50;
+    white-space: nowrap;
+}
+
+.ambulatorio-nome {
+    font-size: 1.1em;
+    color: #1a252f;
+    font-weight: 600;
+}
+
+.ambulatorio-id, .ambulatorio-andar {
+    color: #7f8c8d;
+    font-size: 0.95em;
+}
+
+.ambulatorio-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* Mensagem vazia */
+.empty-message {
+    text-align: center;
+    padding: 40px 20px;
+    color: #7f8c8d;
+}
+
+.empty-message p {
+    font-size: 1.1em;
+    margin: 0;
+}
+
+/* ==================== FORMULÁRIOS ==================== */
+
+.form-wrapper {
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    padding: 40px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-ambulatorio {
+    margin-top: 25px;
+}
+
+.form-content {
+    margin-bottom: 25px;
+}
+
+.form-content p {
+    margin-bottom: 20px;
+}
+
+.form-content label {
+    display: block;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 8px;
+    font-size: 0.95em;
+}
+
+/* Inputs e selects */
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
+input[type="datetime-local"],
+select,
+textarea {
+    width: 100%;
+    padding: 12px 15px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border: 2px solid #ecf0f1;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 1em;
+    color: #2c3e50;
+    transition: all 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="date"]:focus,
+input[type="datetime-local"]:focus,
+select:focus,
+textarea:focus {
+    border-color: #3498db;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Ações dos formulários */
+.form-actions,
+.delete-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+/* ==================== CONFIRMAÇÃO DE DELEÇÃO ==================== */
+
+.delete-confirmation {
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    padding: 40px;
+    max-width: 600px;
+    margin: 0 auto;
+    border-top: 5px solid #e74c3c;
+}
+
+.confirmation-message {
+    background: #fef5f5;
+    border-left: 5px solid #e74c3c;
+    padding: 20px;
+    border-radius: 6px;
+    margin: 25px 0;
+}
+
+.warning-text {
+    font-size: 1.05em;
+    color: #2c3e50;
+    margin-bottom: 10px;
+    margin: 0;
+    padding: 0;
+}
+
+.ambulatorio-name {
+    font-weight: 700;
+    color: #e74c3c;
+    font-size: 1.15em;
+    margin: 10px 0 0 0;
+}
+
+.delete-form {
+    margin-top: 25px;
+}
+
+/* ==================== BOTÕES ==================== */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    font-size: 0.95em;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    text-decoration: none;
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+/* Botão primário (Adicionar) */
+.btn-primary {
+    background-color: #3498db;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #2980b9;
+    color: white;
+}
+
+/* Botão de sucesso (Salvar) */
+.btn-success {
+    background-color: #2ecc71;
+    color: white;
+}
+
+.btn-success:hover {
+    background-color: #27ae60;
+    color: white;
+}
+
+/* Botão de perigo (Deletar) */
+.btn-danger {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #c0392b;
+    color: white;
+}
+
+/* Botão secundário (Cancelar) */
+.btn-secondary {
+    background-color: #95a5a6;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #7f8c8d;
+    color: white;
+}
+
+/* Botão de edição */
+.btn-edit {
+    background-color: #f39c12;
+    color: white;
+    padding: 8px 16px;
+    font-size: 0.9em;
+}
+
+.btn-edit:hover {
+    background-color: #e67e22;
+    color: white;
+}
+
+/* Botão de deleção */
+.btn-delete {
+    background-color: #e74c3c;
+    color: white;
+    padding: 8px 16px;
+    font-size: 0.9em;
+}
+
+.btn-delete:hover {
+    background-color: #c0392b;
+    color: white;
+}
+
+/* ==================== ERROS DO FORMULÁRIO ==================== */
+
+ul.errorlist {
+    list-style: none;
+    color: #e74c3c;
+    background-color: #fadbd8;
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    border-left: 5px solid #e74c3c;
+}
+
+ul.errorlist li {
+    margin: 5px 0;
+    border: none;
+    padding: 0;
+    box-shadow: none;
+    border-left: none;
+}
+
+.errorlist + input,
+.errorlist + select {
+    border-color: #e74c3c !important;
+}
+
+/* ==================== RESPONSIVO ==================== */
+
+@media (max-width: 768px) {
+    .container {
+        padding: 20px 15px;
+    }
+
+    h1 {
+        font-size: 1.8em;
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .header .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .ambulatorio-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .ambulatorio-actions {
+        width: 100%;
+    }
+
+    .ambulatorio-actions .btn {
+        flex: 1;
+        justify-content: center;
+    }
+
+    .form-wrapper {
+        padding: 30px 20px;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .form-actions .btn,
+    .delete-actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .delete-confirmation {
+        padding: 30px 20px;
+    }
+
+    .ambulatorio-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.5em;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+    }
+
+    .form-wrapper,
+    .delete-confirmation {
+        padding: 20px 15px;
+    }
+
+    .btn {
+        padding: 10px 16px;
+        font-size: 0.9em;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    select,
+    textarea {
+        padding: 10px 12px;
+    }
+}

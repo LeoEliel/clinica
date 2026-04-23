@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Ambulatórios</title>
+    <link rel="stylesheet" href="{% static 'clinica/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Ambulatórios Cadastrados</h1>
+            <a href="{% url 'ambulatorio_create' %}" class="btn btn-primary">+ Adicionar Novo Ambulatório</a>
+        </div>
+
+        <div class="list-container">
+            {% if ambulatorios %}
+                <ul class="ambulatorio-list">
+                {% for ambulatorio in ambulatorios %}
+                    <li class="ambulatorio-item">
+                        <div class="ambulatorio-info">
+                            <span class="ambulatorio-id">ID: {{ ambulatorio.id }}</span>
+                            <span class="ambulatorio-nome">{{ ambulatorio.nome }}</span>
+                            <span class="ambulatorio-andar">Andar: {{ ambulatorio.andar }}</span>
+                        </div>
+                        <div class="ambulatorio-actions">
+                            <a href="{% url 'ambulatorio_update' ambulatorio.id %}" class="btn btn-edit">Editar</a>
+                            <a href="{% url 'ambulatorio_delete' ambulatorio.id %}" class="btn btn-delete">Deletar</a>
+                        </div>
+                    </li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <div class="empty-message">
+                    <p>Nenhum ambulatório cadastrado no momento.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

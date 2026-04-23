@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Consultas</title>
+    <link rel="stylesheet" href="{% static 'clinica/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Consultas Cadastradas</h1>
+            <a href="{% url 'consulta_create' %}" class="btn btn-primary">+ Adicionar Nova Consulta</a>
+        </div>
+
+        <div class="list-container">
+            {% if consultas %}
+                <ul class="ambulatorio-list">
+                {% for consulta in consultas %}
+                    <li class="ambulatorio-item">
+                        <div class="ambulatorio-info">
+                            <span class="ambulatorio-id">ID: {{ consulta.id }}</span>
+                            <span class="ambulatorio-nome">{{ consulta.data }} - {{ consulta.horario }}</span>
+                            <span class="ambulatorio-andar">{{ consulta.paciente }}</span>
+                        </div>
+                        <div class="ambulatorio-actions">
+                            <a href="{% url 'consulta_update' consulta.id %}" class="btn btn-edit">Editar</a>
+                            <a href="{% url 'consulta_delete' consulta.id %}" class="btn btn-delete">Deletar</a>
+                        </div>
+                    </li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <div class="empty-message">
+                    <p>Nenhuma consulta cadastrada no momento.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
