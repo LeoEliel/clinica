@@ -1,0 +1,137 @@
+{% extends 'clinica/base.html' %}
+
+{% block title %}Dashboard Inicial - Clínica{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h1 class="text-center">Dashboard da Clínica</h1>
+        <p class="text-center text-muted">Estatísticas e visão geral do sistema legado</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm h-100 border-0">
+            <div class="card-body">
+                <h5 class="card-title text-center text-primary">Pacientes por Convênio</h5>
+                <canvas id="chartConvenios"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm h-100 border-0">
+            <div class="card-body">
+                <h5 class="card-title text-center text-success">Consultas por Mês</h5>
+                <canvas id="chartConsultas"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-4 mx-auto">
+        <div class="card shadow-sm h-100 border-0">
+            <div class="card-body">
+                <h5 class="card-title text-center text-warning">Médicos por Especialidade</h5>
+                <canvas id="chartEspecialidades"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{ labels_convenios|json_script:"labels-data" }}
+{{ dados_pacientes|json_script:"valores-data" }}
+
+{{ labels_consultas|json_script:"labels-consultas" }}
+{{ dados_consultas_qtd|json_script:"valores-consultas" }}
+
+{{ labels_especialidades|json_script:"labels-especialidades" }}
+{{ dados_medicos_especialidade|json_script:"valores-especialidades" }}
+
+<script>
+    const ctxConvenios = document.getElementById('chartConvenios').getContext('2d');
+    new Chart(ctxConvenios, {
+        type: 'bar',
+        data: {
+            labels: JSON.parse(document.getElementById('labels-data').textContent),
+            datasets: [{
+                label: 'Quantidade de Pacientes',
+                data: JSON.parse(document.getElementById('valores-data').textContent),
+                backgroundColor: 'rgba(13, 110, 253, 0.6)',
+                borderColor: 'rgba(13, 110, 253, 1)',
+                borderWidth: 1,
+                borderRadius: 5
+            }]
+        },
+        options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+    });
+
+
+    const ctxConsultas = document.getElementById('chartConsultas').getContext('2d');
+    new Chart(ctxConsultas, {
+        type: 'line',
+        data: {
+            labels: JSON.parse(document.getElementById('labels-consultas').textContent),
+            datasets: [{
+                label: 'Consultas Realizadas',
+                data: JSON.parse(document.getElementById('valores-consultas').textContent),
+                fill: true,
+                backgroundColor: 'rgba(25, 135, 84, 0.2)',
+                borderColor: 'rgba(25, 135, 84, 1)',
+                tension: 0.3,
+                pointBackgroundColor: 'rgba(25, 135, 84, 1)'
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    const ctxEspecialidades = document.getElementById('chartEspecialidades').getContext('2d');
+    new Chart(ctxEspecialidades, {
+        type: 'pie',
+        data: {
+            labels: JSON.parse(document.getElementById('labels-especialidades').textContent),
+            datasets: [{
+                data: JSON.parse(document.getElementById('valores-especialidades').textContent),
+                backgroundColor: [
+                    'rgba(13, 110, 253, 0.7)',
+                    'rgba(25, 135, 84, 0.7)',
+                    'rgba(255, 193, 7, 0.7)',
+                    'rgba(220, 53, 69, 0.7)',
+                    'rgba(13, 202, 240, 0.7)'
+                ],
+                borderColor: [
+                    'rgba(13, 110, 253, 1)',
+                    'rgba(25, 135, 84, 1)',
+                    'rgba(255, 193, 7, 1)',
+                    'rgba(220, 53, 69, 1)',
+                    'rgba(13, 202, 240, 1)'
+                ],
+                borderWidth: 2,
+                hoverOffset: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}

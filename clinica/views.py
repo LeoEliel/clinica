@@ -4,7 +4,10 @@ from django.shortcuts import render
 
 from django.shortcuts import render, get_object_or_404, redirect
 from clinica.models import Ambulatorio, Convenio, Medico, Paciente, Atende, Consulta, Possui
+from django.db.models import Count
 from clinica.forms import AmbulatorioForm, ConvenioForm, MedicoForm, PacienteForm, AtendeForm, ConsultaForm, PossuiForm
+from django.views.generic import TemplateView
+
 
 # ==================== AMBULATÓRIO ====================
 
@@ -244,3 +247,75 @@ def possui_delete(request, id):
         possui_obj.delete()
         return redirect('possui_list')
     return render(request, 'clinica/possui_confirm_delete.html', {'possui': possui_obj})
+
+# ==================== GRÁFICO ====================
+
+def grafico_pacientes_ambulatorio(request):
+    from django.db.models import Count
+    
+    dados = Ambulatorio.objects.annotate(
+        pacientes=Count('paciente')
+    ).values('nome', 'pacientes')
+    
+    dados_formatado = [
+        {'amb': d['nome'], 'pacientes': d['pacientes']}
+        for d in dados
+    ]
+    
+    return render(request, 'clinica/grafico_pacientes.html', {'dados': dados_formatado})
+
+from django.db.models import Count
+from django.db.models.functions import ExtractMonth
+from .models import Possui, Consulta, Medico, Ambulatorio, Paciente
+
+def index(request):
+    dados_convenio = Possui.objects.values('convenio__nome').annotate(total=Count('paciente'))
+    labels_convenios = [d['convenio__nome'] for d in dados_convenio]
+    dados_pacientes = [d['total'] for d in dados_convenio]
+    
+    dados_consultas = Consulta.objects.annotate(
+        mes=ExtractMonth('data')
+    ).values('mes').annotate(
+        total=Count('id')
+    ).order_by('mes')
+    
+    meses_abreviados = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']
+    labels_consultas = []
+    dados_consultas_qtd = []
+    
+    for d in dados_consultas:
+        mes_num = d['mes']
+        if mes_num:
+            labels_consultas.append(meses_abreviados[mes_num - 1])
+            dados_consultas_qtd.append(d['total'])
+            
+    dados_especialidades = Medico.objects.values('especialidade').annotate(total=Count('crm'))
+    labels_especialidades = [d['especialidade'] if d['especialidade'] else 'Não Informada' for d in dados_especialidades]
+    dados_medicos_especialidade = [d['total'] for d in dados_especialidades]
+    
+    context = {
+        'labels_convenios': labels_convenios,
+        'dados_pacientes': dados_pacientes,
+        'labels_consultas': labels_consultas,
+        'dados_consultas_qtd': dados_consultas_qtd,
+        'labels_especialidades': labels_especialidades,
+        'dados_medicos_especialidade': dados_medicos_especialidade,
+    }
+    
+    return render(request, 'clinica/index.html', context)
+
+
+class PacientesPorAmbulatorio(TemplateView):
+    template_name = 'clinica/index.html'
+
+    def get_context_data(self, **kwargs):
+        contexto = super().get_context_data(**kwargs)
+        ambulat = Ambulatorio.objects.all()
+        dados = []
+        for a in ambulat:
+            dados.append({
+                'ambulatorio': a.nome,
+                'pacientes': (Paciente.objects.filter(idamb=a)).count()
+            })
+        contexto['dados'] = dados
+        return contexto
